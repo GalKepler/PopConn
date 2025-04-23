@@ -16,11 +16,11 @@
 
 ## ✨ Features
 
-- 🧠 Compute **population covariance connectomes** from group-level regional data
-- 🧪 Support for **group comparisons** and bootstrapping
-- 🔍 Integrated clustering (e.g., **Louvain**, consensus clustering)
-- 📈 Tools for **visualization** and interpretation of brain networks
-- ⚙️ Extensible design for multi-modal and age-related analyses
+- 📈 Compute **covariance connectomes** from either **wide** or **long-format** data
+- 🔁 Perform **permutation-based group comparisons** with the `GroupComparator`
+- 🧱 Build reusable pipelines using the `CovConn` class
+- 🔬 Plug in custom **statistical metrics** (e.g., matrix difference, Frobenius norm)
+- 📊 Designed for **neuroimaging research**, aging, and population-level modeling
 
 ---
 
@@ -38,18 +38,45 @@ poetry install
 
 ```python
 import pandas as pd
-from popconn.matrix import compute_population_covariance
-from popconn.clustering import louvain_cluster
+from popconn.core.core import CovConn
 
-# Example: rows = subjects, columns = brain regions
-df = pd.read_csv("data/regional_metrics.csv")
+# long-format dataframe with: subject_id, region, value
+df = pd.read_csv("data/long_format_metrics.csv")
 
-# Compute a region-by-region correlation matrix across subjects
-conn_matrix = compute_population_covariance(df)
+conn = CovConn(df, long_format=True)
+covariance_matrix = conn.compute_covariance()
 
-# Cluster using Louvain method
-labels = louvain_cluster(conn_matrix)
 ```
+
+🎯 Compare Groups with Permutation Testing
+```python
+from popconn.stats.comparator import GroupComparator
+from popconn.stats.metrics import correlation_matrix_difference
+
+comparator = GroupComparator(
+    data=df,
+    group_col="group",
+    long_format=True,
+    subject_col="subject_id",
+    region_col="region",
+    value_col="value"
+)
+
+results = comparator.run_permutation_test(
+    stat_func=correlation_matrix_difference,
+    n_permutations=1000,
+    return_distribution=True
+)
+
+results["p_values"]
+
+```
+---
+
+## 📘 Tutorials
+* 🧠 [CovConn Tutorial Notebook](https://github.com/GalKepler/PopConn/blob/main/notebooks/popconn_tutorial_covconn.ipynb)
+* 📊 [Group Comparison Notebook](https://github.com/GalKepler/PopConn/blob/main/notebooks/popconn_group_comparison_tutorial.ipynb)
+
 
 ---
 
