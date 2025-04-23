@@ -7,7 +7,7 @@
 | Category | Badges |
 |----------| -------|
 | 📚 Docs  | _Coming soon_
-| 🧪 Tests & Coverage  | [![CI](https://github.com/GalKepler/popconn/actions/workflows/ci.yml/badge.svg)](https://github.com/GalKepler/popconn/actions)<br> [![Codecov](https://codecov.io/gh/GalKepler/popconn/branch/main/graph/badge.svg)](https://codecov.io/gh/GalKepler/popconn) <br> [![Codacy](https://app.codacy.com/project/badge/Grade/362bbdaea27548bb9f347eabae612ddb)](https://app.codacy.com/gh/GalKepler/popconn/dashboard) |
+| 🧪 Tests & Coverage  | [![CI](https://github.com/GalKepler/popconn/actions/workflows/ci.yml/badge.svg)](https://github.com/GalKepler/popconn/actions)<br> [![Codecov](https://codecov.io/gh/GalKepler/popconn/branch/main/graph/badge.svg)](https://codecov.io/gh/GalKepler/popconn) <br> [![Codacy](https://app.codacy.com/project/badge/Grade/362bbdaea27548bb9f347eabae612ddb)](https://app.codacy.com/gh/GalKepler/PopConn/dashboard) |
 | 🐍 Version           | _Coming soon on PyPI_                                                                                                                                       |
 | 🎨 Styling           | [![Black](https://img.shields.io/badge/formatter-black-000000.svg)](https://github.com/psf/black) <br> [![isort](https://img.shields.io/badge/imports-isort-%231674b1.svg)](https://pycqa.github.io/isort/) <br> [![Ruff](https://img.shields.io/badge/linter-ruff-blue)](https://github.com/astral-sh/ruff) <br> [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit) |
 | 📄 License           | [![License](https://img.shields.io/github/license/GalKepler/popconn.svg)](https://opensource.org/license/mit)                                              |
@@ -16,11 +16,11 @@
 
 ## ✨ Features
 
-- 📈 Compute **covariance connectomes** from either **wide** or **long-format** data
-- 🔁 Perform **permutation-based group comparisons** with the `GroupComparator`
-- 🧱 Build reusable pipelines using the `CovConn` class
-- 🔬 Plug in custom **statistical metrics** (e.g., matrix difference, Frobenius norm)
-- 📊 Designed for **neuroimaging research**, aging, and population-level modeling
+* 📈 Compute **covariance connectomes** from either **wide** or **long-format** data
+* 🔁 Perform **permutation-based group comparisons** with the `GroupComparator`
+* 🧱 Build reusable pipelines using the `CovConn` class
+* 🔬 Plug in custom **statistical metrics** (e.g., matrix difference, Frobenius norm)
+* 📊 Designed for **neuroimaging research**, aging, and population-level modeling
 
 ---
 
@@ -74,9 +74,9 @@ results["p_values"]
 ---
 
 ## 📘 Tutorials
+
 * 🧠 [CovConn Tutorial Notebook](https://github.com/GalKepler/PopConn/blob/main/notebooks/popconn_tutorial_covconn.ipynb)
 * 📊 [Group Comparison Notebook](https://github.com/GalKepler/PopConn/blob/main/notebooks/popconn_group_comparison_tutorial.ipynb)
-
 
 ---
 
