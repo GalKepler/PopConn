@@ -4,8 +4,7 @@
 
 import pytest
 
-
-from popconn import popconn
+from popconn import popconn  # noqa: F401
 
 
 @pytest.fixture
