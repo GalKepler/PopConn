@@ -24,6 +24,7 @@ ruff = "^0.3"
 black = "^25.1.0"
 isort = "^5.12"
 pre-commit = "^3.6"
+ipykernel = "^6.29.5"
 
 
 [build-system]
