@@ -13,15 +13,18 @@ documentation = "https://github.com/GalKepler/popconn/blob/master/changelog.md"
 python = ">=3.10,<4.0"
 pandas = "^2.2.3"
 black = "^25.1.0"
+pytest = "^8.3.5"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.0"
+pytest-cov = "^5.0"
 coverage = "^7.0"
 mypy = "^1.0"
-ruff = "^0.11.6"
+ruff = "^0.3"
 black = "^25.1.0"
-isort = "^6.0.1"
-pre-commit = "^4.2.0"
+isort = "^5.12"
+pre-commit = "^3.6"
+
 
 [build-system]
 requires = ["poetry-core"]
