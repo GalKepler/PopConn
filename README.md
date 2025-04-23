@@ -6,7 +6,7 @@
 
 | Category | Badges |
 |----------| -------|
-| 📚 Docs  | _Coming soon_
+| 📚 Docs  | [![READTHEDOCS](https://readthedocs.org/projects/PopConn/badge/?version=latest)](https://popconn.readthedocs.io/en/latest/)
 | 🧪 Tests & Coverage  | [![CI](https://github.com/GalKepler/popconn/actions/workflows/ci.yml/badge.svg)](https://github.com/GalKepler/popconn/actions)<br> [![Codecov](https://codecov.io/gh/GalKepler/popconn/branch/main/graph/badge.svg)](https://codecov.io/gh/GalKepler/popconn) <br> [![Codacy](https://app.codacy.com/project/badge/Grade/362bbdaea27548bb9f347eabae612ddb)](https://app.codacy.com/gh/GalKepler/PopConn/dashboard) |
 | 🐍 Version           | _Coming soon on PyPI_                                                                                                                                       |
 | 🎨 Styling           | [![Black](https://img.shields.io/badge/formatter-black-000000.svg)](https://github.com/psf/black) <br> [![isort](https://img.shields.io/badge/imports-isort-%231674b1.svg)](https://pycqa.github.io/isort/) <br> [![Ruff](https://img.shields.io/badge/linter-ruff-blue)](https://github.com/astral-sh/ruff) <br> [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit) |
