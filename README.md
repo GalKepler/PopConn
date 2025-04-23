@@ -38,7 +38,7 @@ poetry install
 
 ```python
 import pandas as pd
-from popconn.core.core import CovConn
+from popconn.core import CovConn
 
 # long-format dataframe with: subject_id, region, value
 df = pd.read_csv("data/long_format_metrics.csv")
