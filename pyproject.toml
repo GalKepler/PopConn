@@ -10,10 +10,13 @@ repository = "https://github.com/GalKepler/popconn"
 documentation = "https://github.com/GalKepler/popconn/blob/master/changelog.md"
 
 [tool.poetry.dependencies]
-python = ">=3.10,<4.0"
+python = ">=3.11,<4.0"
 pandas = "^2.2.3"
 black = "^25.1.0"
 pytest = "^8.3.5"
+sphinx = "^8.2.3"
+sphinx-rtd-theme = "^3.0.2"
+myst-parser = "^4.0.1"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.0"
