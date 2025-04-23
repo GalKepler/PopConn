@@ -1,15 +1,14 @@
 import pandas as pd
 import pytest
 
-from popconn.stats.metrics import (
-    correlation_matrix_difference,
-    frobenius_norm_difference,
-)
+from popconn.core import CovConn
+from popconn.stats import METRICS
 
 
 @pytest.fixture
-def long_format_data():
-    return pd.DataFrame(
+def covariance_matrices():
+    """Return group1 and group2 covariance matrices computed from long-format test data."""
+    data = pd.DataFrame(
         {
             "subject_id": ["s1"] * 3
             + ["s2"] * 3
@@ -42,20 +41,37 @@ def long_format_data():
         }
     )
 
+    group1 = data[data["group"] == "young"]
+    group2 = data[data["group"] == "old"]
 
-def test_correlation_matrix_difference(long_format_data):
-    group1 = long_format_data[long_format_data["group"] == "young"]
-    group2 = long_format_data[long_format_data["group"] == "old"]
+    conn1 = CovConn(group1, long_format=True).compute_covariance()
+    conn2 = CovConn(group2, long_format=True).compute_covariance()
 
-    result = correlation_matrix_difference(group1, group2)
-    assert isinstance(result, pd.DataFrame)
-    assert result.shape == (3, 3)  # Expecting a region x region matrix
+    return conn1, conn2
 
 
-def test_frobenius_norm_difference(long_format_data):
-    group1 = long_format_data[long_format_data["group"] == "young"]
-    group2 = long_format_data[long_format_data["group"] == "old"]
+def test_all_registered_metrics_run_without_error(covariance_matrices):
+    mat1, mat2 = covariance_matrices
 
-    result = frobenius_norm_difference(group1, group2)
-    assert isinstance(result, pd.DataFrame)
-    assert result.shape == (1, 1)  # Frobenius norm is a scalar value
+    for name, func in METRICS.items():
+        result = func(mat1, mat2)
+        assert isinstance(result, pd.DataFrame), f"{name} did not return a DataFrame"
+        assert not result.isnull().values.any(), f"{name} returned NaNs"
+
+
+def test_output_shapes(covariance_matrices):
+    mat1, mat2 = covariance_matrices
+
+    expected_shapes = {
+        "correlation_matrix_difference": (3, 3),
+        "frobenius_norm_difference": (1, 1),
+        "degree_difference": (3, 1),
+        "strength_difference": (3, 1),
+        "global_efficiency_difference": (1, 1),
+    }
+
+    for name, func in METRICS.items():
+        result = func(mat1, mat2)
+        assert (
+            result.shape == expected_shapes[name]
+        ), f"{name} returned shape {result.shape}, expected {expected_shapes[name]}"
