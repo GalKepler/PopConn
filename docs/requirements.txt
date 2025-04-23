@@ -1,4 +1,3 @@
 sphinx>=8.2.3  # To build Sphinx-based docs
 sphinx_rtd_theme  # The theme used by ReadTheDocs
 myst-parser  # If you want to use markdown in your docs
-recommonmark # If you want to use markdown in your docs
