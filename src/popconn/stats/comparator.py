@@ -97,12 +97,24 @@ class GroupComparator:
         rng = np.random.default_rng(random_state)
         observed = stat_func(self.group1_data, self.group2_data)
         null_diffs = []
+        label_history = []
 
         for _ in range(n_permutations):
-            shuffled = self.data.copy()
-            shuffled[self.group_col] = rng.permutation(shuffled[self.group_col].values)
+            subject_labels = self.data[
+                [self.subject_col, self.group_col]
+            ].drop_duplicates()
+            permuted = subject_labels.copy()
+            permuted[self.group_col] = rng.permutation(
+                subject_labels[self.group_col].values
+            )
+            label_history.append(permuted)
+
+            shuffled = self.data.drop(columns=[self.group_col]).merge(
+                permuted, on=self.subject_col
+            )
             g1 = shuffled[shuffled[self.group_col] == self.group_labels[0]]
             g2 = shuffled[shuffled[self.group_col] == self.group_labels[1]]
+
             null = stat_func(g1, g2)
             null_diffs.append(null.values)
 
@@ -115,4 +127,5 @@ class GroupComparator:
                 p_values, index=observed.index, columns=observed.columns
             ),
             "null_distributions": null_diffs if return_distribution else None,
+            "permutation_labels": label_history,
         }

@@ -68,9 +68,20 @@ def test_run_permutation_test_output_structure(long_format_data):
         stat_func=correlation_matrix_difference,
         n_permutations=10,
         return_distribution=True,
+        random_state=42,
     )
     assert "observed" in results
     assert "p_values" in results
     assert "null_distributions" in results
     assert results["observed"].shape == results["p_values"].shape
-    assert results["null_distributions"].shape[0] == 10
+    assert results["null_distributions"].shape == (10, 3, 3)
+    assert not pd.isnull(results["p_values"]).any().any(), "p-values contain NaNs"
+    assert (
+        not pd.isnull(results["observed"]).any().any()
+    ), "observed difference contains NaNs"
+    assert not pd.isnull(
+        results["null_distributions"]
+    ).any(), "null_distributions contain NaNs"
+    assert "permutation_labels" in results
+    assert len(results["permutation_labels"]) == 10
+    assert isinstance(results["permutation_labels"][0], pd.DataFrame)
