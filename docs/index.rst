@@ -4,7 +4,7 @@
    :maxdepth: 3
 
    installation
-   user_guide/index
+   covariance_connectomes/index
    api_reference/index
    contributing
    authors
