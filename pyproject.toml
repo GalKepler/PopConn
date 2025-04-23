@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "popconn"
+version = "0.1.0"
+description = "Python tools for analyzing population-level covariance connectomes from inter-subject correlations"
+authors = ["Gal Kepler <galkepler@gmail.com>"]
+license = "MIT"
+readme = "README.rst"
+homepage = "https://github.com/GalKepler/popconn"
+repository = "https://github.com/GalKepler/popconn"
+documentation = "https://github.com/GalKepler/popconn/blob/master/changelog.md"
+
+[tool.poetry.dependencies]
+python = ">=3.8,<4.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0"
+coverage = "^7.0"
+mypy = "^1.0"
+ruff = "^0.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+# Mypy
+[tool.mypy]
+files = "."
+strict = true
+warn_unreachable = true
+warn_no_return = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+allow_untyped_defs = true
+disable_error_code = "attr-defined"
