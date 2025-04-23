@@ -1,15 +1,62 @@
-name: CI
+name: build
 
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+on: [push, pull_request]
 
 jobs:
   test:
+    name: Test on ${{ matrix.python }}
     runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.10", "3.11"]
 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Install Poetry
+        run: pip install poetry
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Run tests
+        run: poetry run pytest --cov=popconn --cov-report=xml:coverage.xml --cov-report=term
+
+  lint-check:
+    name: Lint & Format Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install Poetry
+        run: pip install poetry
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Run linters (ruff, black, isort)
+        run: |
+          poetry run ruff .
+          poetry run black --check .
+          poetry run isort --check-only .
+
+  upload-coverage:
+    name: Upload coverage to Codecov & Code Climate
+    runs-on: ubuntu-latest
+    needs: test
+    if: ${{ always() }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -25,11 +72,19 @@ jobs:
       - name: Install dependencies
         run: poetry install
 
-      - name: Run tests
-        run: poetry run pytest
-
-      - name: Run linters
+      - name: Run tests with coverage
         run: |
-          poetry run ruff .
-          poetry run black --check .
-          poetry run isort --check-only .
+          poetry run pytest --cov=popconn --cov-report=xml:coverage.xml --cov-report=html
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+            token: ${{ secrets.CODECOV_TOKEN }}
+            name: codecov-umbrella
+            fail_ci_if_error: true
+
+      - name: Upload to Codacy
+        uses: codacy/codacy-coverage-reporter-action@v1
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: coverage.xml
