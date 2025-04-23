@@ -1,7 +1,7 @@
 import pandas as pd
 import pytest
 
-from popconn.core.core import CovConn
+from popconn.core import CovConn
 
 
 @pytest.fixture
